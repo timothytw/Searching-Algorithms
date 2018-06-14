@@ -1,41 +1,42 @@
 /*
-Create a graph to test searching algorithms and compare results
-*/
+ Test search algorithms and analyze results
+ */
 
 #include <iostream>
 #include "breadth_first_search.hpp"
 #include "node.hpp"
 
-int main(int argc, const char * argv[]) {
-    /*
-     Create grapth where shortest path from root to d is root->b->d (cost: 6, depth: 2)
-     Purposely add other paths that lead root to d
-     */
+void testBFS() {
     Node root{"root"};
     Node a{"a"};
     Node b{"b"};
-    // ignored
-    root.addPath(&root, 99);
-    // If initialized this way, shortest path and smallest depth is achieved (BFS)
-    root.addPath(&b, 5);
-    root.addPath(&a, 3);
+    // add a path to itself, BFS will ignore because it has visited it already
+    root.addPath(root, -999);
     
-    // If initialized this way, because BFS uses FIFO, the shortest path is not achieved but smallest depth is achieved
-    // root.addPath(&a, 3);
-    // root.addPath(&b, 5);
-    
-    // Not connected to anything
-    // Node c{"c"};
+    // Switching the order does not gurantee a path over the other
+    root.addPath(b, 5);
+    root.addPath(a, 3);
+
+    // Not connected to anything, you can alter the target of BFS to this node and will return an empty path
+    Node c{"c"};
+
     Node d{"d"};
     // Create multiple paths to get to d
-    b.addPath(&d, 1);
-    a.addPath(&d, 7);
-    
+    // Shortest path to d: root->b->d (cost: 6, depth: 2)
+    b.addPath(d, 1);
+    // Ignored because visited
+    b.addPath(root, 0);
+    // Another path to d: root->a->d (cost: 10, depth: 2)
+    a.addPath(d, 7);
+
     // Start BFS test
-    BFS::BFSPairResult result = BFS::breadth_first_search(&root, &d);
-    std::cout << "Cost: " << result.first << std::endl;
-    std::cout << "Depth: " << result.second.size() << std::endl;
-    BFS::printBFSPath(result);
+    // It is possible that the path found is root->b->d or root->a->d, what matters is the depth amount (3)
+    BFS::BFSPairResult result = BFS::breadth_first_search(root, d);
+    BFS::printBFSResult(result);
     // End BFS test
+}
+
+int main(int argc, const char * argv[]) {
+    testBFS();
     return 0;
 }

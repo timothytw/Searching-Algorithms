@@ -7,33 +7,28 @@
 #include "node.hpp"
 
 void testBFS() {
-    Node root{"root"};
     Node a{"a"};
     Node b{"b"};
-    // add a path to itself, BFS will ignore because it has visited it already
-    root.addPath(root, -999);
-    
-    // Switching the order does not gurantee a path over the other
-    root.addPath(b, 5);
-    root.addPath(a, 3);
-
-    // Not connected to anything, you can alter the target of BFS to this node and will return an empty path
     Node c{"c"};
-
     Node d{"d"};
-    // Create multiple paths to get to d
-    // Shortest path to d: root->b->d (cost: 6, depth: 2)
-    b.addPath(d, 1);
-    // Ignored because visited
-    b.addPath(root, 0);
-    // Another path to d: root->a->d (cost: 10, depth: 2)
-    a.addPath(d, 7);
-
-    // Start BFS test
-    // It is possible that the path found is root->b->d or root->a->d, what matters is the depth amount (3)
-    BFS::BFSPairResult result = BFS::breadth_first_search(root, d);
-    BFS::printBFSResult(result);
-    // End BFS test
+    Node e{"e"};
+    Node f{"f"};
+    // Unconnected, altering the target of BFS to this node will return an empty path
+    Node g{"unconnected"};
+    a.addPath(b, 2);
+    a.addPath(e, 5);
+    // add a path to itself, BFS will ignore because it has visited it already so cycles are not a problem
+    a.addPath(a, 0);
+    a.addPath(d, 1);
+    b.addPath(c, 8);
+    // Uncommenting this may cause BFS to choose this path instead because BFS only finds the shallowest depth
+    // b.addPath(f, 9999);
+    b.addPath(e, 1);
+    c.addPath(f, 1);
+    e.addPath(d, 1);
+    d.addPath(f, 5);
+    BFS::childToParentPaths result = BFS::breadth_first_search(a, f);
+    BFS::printBFSResult(a,f, result);
 }
 
 int main(int argc, const char * argv[]) {

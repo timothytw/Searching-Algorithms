@@ -5,7 +5,7 @@
  Breadth First Search (BFS)
  
  Can be used on a Tree or Graph using the Node class
- BFS does not always find the shortest path but finds the smallest depth to get to the target
+ BFS does not always find the shortest path but finds the shallowest depth to get to the target
  
  breadth_first_search returns a pair <total weight, path taken (deque)>
  
@@ -34,8 +34,9 @@ namespace BFS {
     // Faster lookup: To determine if a node is in DequeNodePtr or Frontier
     using SetOfNodePtr = std::set<const Node*>;
     using BFSPairResult = std::pair<int, DequeOfNodePtr>;
+    using childToParentPaths = std::unordered_map<const Node*, std::pair<const Node*, int>>;
 
-    const BFSPairResult breadth_first_search(const Node& root, const Node& target);
-    void printBFSResult(const BFSPairResult& result);
+    const childToParentPaths breadth_first_search(const Node& root, const Node& target);
+    void printBFSResult(const Node& start, const Node& end, const BFS::childToParentPaths& result);
 }
 #endif /* breadth_first_search_h */

@@ -48,6 +48,7 @@
 		1C25CA2320D04EC1002E9DC8 = {
 			isa = PBXGroup;
 			children = (
+				1C5295B620D0BA1000FC54D2 /* READme.md */,
 				1C25CA2E20D04EC1002E9DC8 /* Searching-Algorithms */,
 				1C25CA2D20D04EC1002E9DC8 /* Products */,
 			);
@@ -67,7 +68,6 @@
 				1C25CA2F20D04EC1002E9DC8 /* main.cpp */,
 				1C5295B320D0B41500FC54D2 /* breadth_first_search.cpp */,
 				1C5295B520D0B67F00FC54D2 /* breadth_first_search.hpp */,
-				1C5295B620D0BA1000FC54D2 /* READme.md */,
 				1C25CA3620D04F1F002E9DC8 /* node.cpp */,
 				1C25CA3720D04F1F002E9DC8 /* node.hpp */,
 			);

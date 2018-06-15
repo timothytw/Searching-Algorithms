@@ -4,7 +4,7 @@
 const BFS::childToParentPaths BFS::breadth_first_search(const Node& root, const Node& target) {
     // Nodes we have finished investigating
     BFS::DequeOfNodePtr visited;
-    // For easy lookup if a node is in visisted
+    // For easy lookup if a node is in visited
     BFS::SetOfNodePtr visitedKeys;
     
     // Keep track of the paths [Child Node]->[Parent Node, Weight to Child]
@@ -18,17 +18,17 @@ const BFS::childToParentPaths BFS::breadth_first_search(const Node& root, const 
     }
     // The nodes that we have discovered and will visit FIFO style
     BFS::Frontier frontier;
-    // Root is first discovered initially with weight of 0
+    // root is first discovered initially with weight of 0
     frontier.push_front({&root, 0});
     // For easy lookup if a node is in frontier
     BFS::SetOfNodePtr frontierKeys;
     frontierKeys.insert(&root);
-
+    
     while (frontier.size() != 0) {
         // Select node from frontier to visit
         const Node* current = frontier.front().first;
         const int costToGetToCurrent = frontier.front().second;
-        // Remove from frontier and add it to visited.
+        // Remove from frontier and add it to visited
         frontier.pop_front();
         frontierKeys.erase(current);
         visited.push_back(current);
@@ -49,16 +49,16 @@ const BFS::childToParentPaths BFS::breadth_first_search(const Node& root, const 
             bool notInFrontier = ( frontierKeys.find(discovered) == frontierKeys.end() );
             if (neverVisited && notInFrontier) {
                 // Calculate new cost to get to this discovered node
-                int newWeight = current->getPathWeight(*discovered) + costToGetToCurrent;
+                int newWeightToDiscovered = current->getPathWeight(*discovered) + costToGetToCurrent;
                 // Remember new path
-                rememberedPaths[discovered] = {current, newWeight};
+                rememberedPaths[discovered] = {current, newWeightToDiscovered};
                 // Found target
                 if (discovered == &target) {
-                    visited.push_back(&target);
+                    // visited.push_back(&target);
                     return rememberedPaths;
                 }
                 // Not the target, update to new cost and add to frontier
-                frontier.push_back({discovered, newWeight});
+                frontier.push_back({discovered, newWeightToDiscovered});
                 frontierKeys.insert(discovered);
             }
         }
@@ -73,7 +73,7 @@ const BFS::childToParentPaths BFS::breadth_first_search(const Node& root, const 
  Prints the path and costs backwards so it will refer to child->parent->grandparent->grandgrandparent->...
  There is a start and end parameter because result does not give the starting and ending nodes easily
  */
-void BFS::printBFSResult(const Node& start, const Node& end, const BFS::childToParentPaths& result) {
+void BFS::printResult(const Node& start, const Node& end, const BFS::childToParentPaths& result) {
     // Size does not mean the number of nodes in the path, but if theres no path,
     // all paths are cleared so size is 0
     if (result.size() == 0) {

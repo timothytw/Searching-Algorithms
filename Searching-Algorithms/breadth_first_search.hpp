@@ -33,10 +33,9 @@ namespace BFS {
     using DequeOfNodePtr = std::deque<const Node*>;
     // Faster lookup: To determine if a node is in DequeNodePtr or Frontier
     using SetOfNodePtr = std::set<const Node*>;
-    using BFSPairResult = std::pair<int, DequeOfNodePtr>;
     using childToParentPaths = std::unordered_map<const Node*, std::pair<const Node*, int>>;
 
     const childToParentPaths breadth_first_search(const Node& root, const Node& target);
-    void printBFSResult(const Node& start, const Node& end, const BFS::childToParentPaths& result);
+    void printResult(const Node& start, const Node& end, const BFS::childToParentPaths& result);
 }
 #endif /* breadth_first_search_h */
